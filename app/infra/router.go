@@ -53,17 +53,20 @@ func NewRouter() *Router {
 	//ルーティングテーブルの初期化
 	router.initTaskRoute(*taskController)
 
-
 	return router
 }
 
 func (router *Router) initTaskRoute(taskController controller.TaskController) {
 	taskRoute := router.Engine.Group("/task")
 	{
+		taskRoute.POST("/create", func(c *gin.Context) {
+			taskController.Create(c)
+		})
+
 		testTaskRoute := taskRoute.Group("/test")
 		{
 			testTaskRoute.GET("/create", func(c *gin.Context) {
-				taskController.Create(c)
+				taskController.TestCreate(c)
 			})
 			testTaskRoute.GET("/read", func(c *gin.Context) {
 				taskController.Read(c)

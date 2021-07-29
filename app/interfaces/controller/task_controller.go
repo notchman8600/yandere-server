@@ -1,6 +1,9 @@
 package controller
 
 import (
+	"fmt"
+	"log"
+
 	"d-meeting.com/d-server/domain"
 	"d-meeting.com/d-server/interfaces/database"
 	"d-meeting.com/d-server/usecase"
@@ -24,10 +27,12 @@ func (controller *TaskController) Create(c Context) {
 	// テストオブジェクト
 
 	task := domain.Todo{}
-
+	err := c.Bind(&task)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fmt.Println(task.TaskId)
 	u := domain.TodoSuccessMessage{}
-
-	c.Bind(&u)
 
 	task_id, err := controller.Interactor.Create(task)
 	if err != nil {
@@ -38,10 +43,29 @@ func (controller *TaskController) Create(c Context) {
 	u.Message = "success"
 	c.JSON(201, u)
 }
+
+func (controller *TaskController) TestCreate(c Context) {
+	// テストオブジェクト
+	task := domain.Todo{}
+	task.Desc = "hogehoge"
+	task.Task = "example task"
+
+	u := domain.TodoSuccessMessage{}
+
+	task_id, err := controller.Interactor.Create(task)
+	if err != nil {
+		c.JSON(500, NewError(err))
+		return
+	}
+	u.TaskId = task_id.TaskId
+	u.Message = "success"
+	c.JSON(201, u)
+
+}
 func (controller *TaskController) Read(c Context) {
 	tasks := domain.Todos{}
 	c.Bind(&tasks)
-	tasks, err := controller.Interactor.TaskRepository.FindById("example_id")
+	tasks, err := controller.Interactor.TaskRepository.FindById("example_user_id")
 	if err != nil {
 		c.JSON(500, NewError(err))
 		return
