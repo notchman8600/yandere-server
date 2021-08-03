@@ -1,7 +1,7 @@
 package domain
 
 type Todo struct {
-	Task     string `json:"task"`
+	Task     string `json:"name"`
 	Desc     string `json:"desc"`
 	Deadline string `json:"deadline"`
 	TaskId   string `json:"task_id"`
