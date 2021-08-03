@@ -6,6 +6,7 @@ create table tasks
     is_done boolean default false,
     user_id text not null default '',
     status integer not null default 0,
+    deadline timestamp with time zone,
     created_at timestamp with time zone default current_timestamp,
     updated_at timestamp with time zone default current_timestamp
 );
