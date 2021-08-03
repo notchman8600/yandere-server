@@ -23,7 +23,7 @@ func (repo *TaskRepository) Store(task domain.Todo) (id string, err error) {
 		task.TaskId = uid_str
 	}
 	_, err = repo.Execute(
-		"INSERT INTO tasks(task_id, name, description,user_id,status,deadline) values($1,$2,$3,$4,$5,$6)",
+		"INSERT INTO tasks(task_id, name, description,user_id,task_status,deadline) values($1,$2,$3,$4,$5,$6)",
 		task.TaskId, task.Task, task.Desc, "example_user_id", task.Status, task.Deadline,
 	)
 	if err != nil {
