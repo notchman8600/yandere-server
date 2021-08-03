@@ -22,9 +22,9 @@ func (repo *TaskRepository) Store(task domain.Todo) (id string, err error) {
 		uid_str := uid.String()
 		task.TaskId = uid_str
 	}
-
 	_, err = repo.Execute(
-		"INSERT INTO tasks(task_id, name, description,user_id) values($1,$2,$3,$4)", task.TaskId, task.Task, task.Desc, "example_user_id",
+		"INSERT INTO tasks(task_id, name, description,user_id,status,deadline) values($1,$2,$3,$4,$5,$6)",
+		task.TaskId, task.Task, task.Desc, "example_user_id", task.Status, task.Deadline,
 	)
 	if err != nil {
 		return "", err
@@ -32,22 +32,27 @@ func (repo *TaskRepository) Store(task domain.Todo) (id string, err error) {
 	id = task.TaskId
 	return
 }
+
 func (repo *TaskRepository) FindById(identifier string) (data domain.Todos, err error) {
 	rows, err := repo.Query("select * from tasks where user_id = $1", identifier)
-	defer rows.Close()
+
 	if err != nil {
 		log.Fatalln(err)
 		return
 	}
+	defer rows.Close()
+
 	for rows.Next() {
 		var task_id string
 		var name string
 		var desc string
 		var is_done bool
+		var task_status int
+		var deadline time.Time
 		var created_at time.Time
 		var updated_at time.Time
 		var user_id string
-		if err := rows.Scan(&task_id, &name, &desc, &is_done, &user_id, &created_at, &updated_at); err != nil {
+		if err := rows.Scan(&task_id, &name, &desc, &is_done, &user_id, &task_status, &deadline, &created_at, &updated_at); err != nil {
 			log.Fatalln(err)
 			continue
 		}
