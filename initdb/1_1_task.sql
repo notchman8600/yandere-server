@@ -8,5 +8,6 @@ create table tasks
     task_status integer not null default 0,
     deadline timestamp with time zone,
     created_at timestamp with time zone default current_timestamp,
-    updated_at timestamp with time zone default current_timestamp
+    updated_at timestamp with time zone default current_timestamp,
+    constraint task_pkey PRIMARY KEY(task_id)
 );

@@ -1,0 +1,62 @@
+FORMAT: 1A
+HOST: http://localhost
+
+# Yandere API
+ヤンデレちゃんのためのサーバーです
+
+
+    task_id text UNIQUE,
+    name text not null default '',
+    description text not null default '',
+    is_done boolean default false,
+    user_id text not null default '',
+    task_status integer not null default 0,
+    deadline timestamp with time zone,
+
+## タスク登録 [POST /task/create]
+タスクを登録する
+
++ Request (application/json)
+    + Attributes
+        + name: `success` (string,required) - タスクの内容
+        + description: `ほげほげをやる` (string,required) - タスクの詳細
+        + is_done: `false` (boolean,required) - タスクの完了状態
+        + user_id: `example-user-id` (string,required) - ユーザーID
+        + status: `Done` (string,required) - タスクの現在の状態
+                    
++ Response 200 (application/json)
+    + Attributes
+        + result: `true` (boolean) - 登録結果
+        + message: `success` (string) - メッセージ
+        + task_id: `example-task-id` (string) - タスクID
+
++ Response 400 (application/json)
+    + Attributes
+        + result: `false` (boolean) - 登録結果
+        + message: `Failure, example_id is not permitted` (string) - エラー内容の返却
+        + code: `104` (number) - エラーコード
+
+## タスク更新 [POST /task/update]
+タスクを更新する
+
++ Request (application/json)
+    + Attributes
+        + task_id: `example-task-id` (string,required) - タスクID
+        + name: `success` (string) - タスクの内容
+        + description: `ほげほげをやる` (string) - タスクの詳細
+        + is_done: `true` (boolean) - タスクの完了状態
+        + user_id: `example-user-id` (string) - ユーザーID
+        + status: `Done` (string) - タスクの現在の状態
+                    
++ Response 200 (application/json)
+    + Attributes
+        + result: `true` (boolean) - 登録結果
+        + message: `success` (string) - メッセージ
+
++ Response 400 (application/json)
+    + Attributes
+        + result: `false` (boolean) - 登録結果
+        + message: `Failure, example_id is not permitted` (string) - エラー内容の返却
+        + code: `104` (number) - エラーコード
+
+---
