@@ -65,7 +65,7 @@ func (controller *TaskController) TestCreate(c Context) {
 func (controller *TaskController) Read(c Context) {
 	tasks := domain.Todos{}
 	c.Bind(&tasks)
-	tasks, err := controller.Interactor.TaskRepository.FindById("example_user_id")
+	tasks, err := controller.Interactor.TaskRepository.FindById("example-user-id")
 	if err != nil {
 		c.JSON(500, NewError(err))
 		return
