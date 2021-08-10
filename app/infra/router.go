@@ -42,6 +42,7 @@ func NewRouter() *Router {
 		// 許可したいアクセス元の一覧
 		AllowOrigins: []string{
 			url,
+			"http://localhost:3000",
 		},
 		MaxAge: 24 * time.Hour,
 	}))
