@@ -72,6 +72,9 @@ func (router *Router) initTaskRoute(taskController controller.TaskController) {
 		taskRoute.GET("/read", func(c *gin.Context) {
 			taskController.Read(c)
 		})
+		taskRoute.GET("/progress", func(c *gin.Context) {
+			taskController.Calc(c)
+		})
 		testTaskRoute := taskRoute.Group("/test")
 		{
 			testTaskRoute.GET("/create", func(c *gin.Context) {

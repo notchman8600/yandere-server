@@ -72,3 +72,18 @@ func (controller *TaskController) Read(c Context) {
 	}
 	c.JSON(201, tasks)
 }
+
+type ResultProgress struct {
+	Progress float64 `json:"progress"`
+}
+
+func (TaskController *TaskController) Calc(c Context) {
+	identifier := c.DefaultQuery("task_id", "example-user-id")
+	progress, err := TaskController.Interactor.CalcProgress(identifier)
+	if err != nil {
+		c.JSON(500, NewError(err))
+		return
+	}
+
+	c.JSON(201, ResultProgress{Progress: progress})
+}

@@ -32,7 +32,6 @@ func (repo *TaskRepository) Store(task domain.Todo) (id string, err error) {
 	id = task.TaskId
 	return
 }
-
 func (repo *TaskRepository) FindById(identifier string) (data domain.Todos, err error) {
 	rows, err := repo.Query("select * from tasks where user_id = $1", identifier)
 
@@ -57,13 +56,29 @@ func (repo *TaskRepository) FindById(identifier string) (data domain.Todos, err 
 			continue
 		}
 		task := domain.Todo{
-			Task:   name,
-			TaskId: task_id,
-			Desc:   desc,
-			IsDone: false,
+			Task:     name,
+			TaskId:   task_id,
+			Desc:     desc,
+			IsDone:   is_done,
+			UserId:   user_id,
+			Deadline: deadline.String(),
 		}
 
 		data = append(data, task)
 	}
-	return data, nil
+	return
+}
+
+func (repo *TaskRepository) CalcProgress(identifier string) (progress float64, err error) {
+	datas, err := repo.FindById(identifier)
+	var count = 0
+
+	for _, data := range datas {
+		if data.IsDone {
+			count = count + 1
+		}
+	}
+
+	progress = float64(count) / float64(len(datas))
+	return
 }

@@ -7,6 +7,7 @@ type Todo struct {
 	TaskId   string `json:"task_id"`
 	IsDone   bool   `json:"is_done"`
 	Status   int    `json:"status"`
+	UserId   string `json:"user_id"`
 }
 
 type TodoSuccessMessage struct {

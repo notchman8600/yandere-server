@@ -1,6 +1,12 @@
 package usecase
 
-import "d-meeting.com/d-server/domain"
+import (
+	"github.com/pkg/errors"
+
+	"log"
+
+	"d-meeting.com/d-server/domain"
+)
 
 type TaskInteractor struct {
 	TaskRepository TaskRepository
@@ -15,5 +21,12 @@ func (interactor *TaskInteractor) Create(meeting domain.Todo) (message domain.To
 	message.Message = "success"
 	// _, err = interactor.TaskRepository.FindById(identifier)
 
+	return
+}
+func (interactor *TaskInteractor) CalcProgress(id string) (progress float64, err error) {
+	progress, err = interactor.TaskRepository.CalcProgress(id)
+	if err != nil {
+		log.Fatalln(errors.WithStack(err))
+	}
 	return
 }
