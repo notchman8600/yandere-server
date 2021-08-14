@@ -15,10 +15,13 @@ type TaskInteractor struct {
 func (interactor *TaskInteractor) Create(meeting domain.Todo) (message domain.TodoSuccessMessage, err error) {
 	identifier, err := interactor.TaskRepository.Store(meeting)
 	if err != nil {
+		message.Message = "Failed"
+		message.Result = false
 		return
 	}
 	message.TaskId = identifier
-	message.Message = "success"
+	message.Message = "Success"
+	message.Result = true
 	// _, err = interactor.TaskRepository.FindById(identifier)
 
 	return

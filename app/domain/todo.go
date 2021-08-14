@@ -11,8 +11,9 @@ type Todo struct {
 }
 
 type TodoSuccessMessage struct {
-	Message string
-	TaskId  string
+	Message string `json:"message"`
+	Result  bool   `json:"result"`
+	TaskId  string `json:"task_id"`
 }
 
 type Todos []Todo
