@@ -59,6 +59,7 @@ func (controller *TaskController) TestCreate(c Context) {
 	}
 	u.TaskId = task_id.TaskId
 	u.Message = "success"
+	u.Result = true
 	c.JSON(201, u)
 
 }
