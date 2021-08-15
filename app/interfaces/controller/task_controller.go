@@ -41,6 +41,7 @@ func (controller *TaskController) Create(c Context) {
 	}
 	u.TaskId = task_id.TaskId
 	u.Message = "success"
+	u.Result = true
 	c.JSON(201, u)
 }
 
