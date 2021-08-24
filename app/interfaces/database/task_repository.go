@@ -25,7 +25,7 @@ func (repo *TaskRepository) Store(task domain.Todo) (id string, err error) {
 	//PoCの段階では同一ユーザーとして扱う
 	task.UserId = "example-user-id"
 	_, err = repo.Execute(
-		"INSERT INTO tasks(task_id, name, description,is_done,user_id,task_status) values($1,$2,$3,$4,$5,$6) ON CONFLICT ON CONSTRAINT task_pkey DO UPDATE SET name=$2, description=$3, is_done=$4, task_status=$6",
+		"INSERT INTO tasks(task_id, name, description,is_done,user_id,task_status) values($1,$2,$3,$4,$5,$6) ON CONFLICT ON CONSTRAINT task_pkey DO UPDATE SET name=$2, description=$3, is_done=$4, user_id=$5, task_status=$6",
 		task.TaskId, task.Task, task.Desc, task.IsDone, "example-user-id", task.Status,
 	)
 	if err != nil {
@@ -64,6 +64,7 @@ func (repo *TaskRepository) FindById(identifier string) (data domain.Todos, err 
 			IsDone:   is_done,
 			UserId:   user_id,
 			Deadline: deadline.String(),
+			Status:   task_status,
 		}
 
 		data = append(data, task)

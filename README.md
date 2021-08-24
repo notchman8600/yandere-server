@@ -5,7 +5,7 @@
 curl -i -H "Origin:http://localhost" localhost:8080/task/test/create
 curl -i -H "Origin:http://localhost" localhost:8080/task/test/read
 curl -i -H "Origin:http://localhost" localhost:8080/task/progress
-curl -X POST -H "Content-Type: application/json" -H "Origin:http://localhost" -d '{"task":"example_task","desc":"hogehoge"}' localhost:8080/task/create
+curl -X POST -H "Content-Type: application/json" -H "Origin:http://localhost" -d '{"task_id":"example-task-id-1","task":"example_task","desc":"hogehoge"}' localhost:8080/task/create
 
 ## Docker滅びの呪文（SQL関連の更新が来たときはこれを実行することを推奨）
 

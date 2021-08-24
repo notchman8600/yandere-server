@@ -4,7 +4,6 @@ HOST: http://localhost
 # Yandere API
 ヤンデレちゃんのためのサーバーです
 
-
     task_id text UNIQUE,
     name text not null default '',
     description text not null default '',
@@ -23,6 +22,7 @@ HOST: http://localhost
         + is_done: `false` (boolean,required) - タスクの完了状態
         + user_id: `example-user-id` (string,required) - ユーザーID
         + status: `Done` (string,required) - タスクの現在の状態
+        + deadline `2014-10-10T13:50:40+09:00` (string) - 締め切り日時
                     
 + Response 200 (application/json)
     + Attributes
@@ -47,6 +47,7 @@ HOST: http://localhost
         + is_done: `true` (boolean) - タスクの完了状態
         + user_id: `example-user-id` (string) - ユーザーID
         + status: `Done` (string) - タスクの現在の状態
+        + deadline `2014-10-10T13:50:40+09:00` (string) - 締め切り日時
                     
 + Response 200 (application/json)
     + Attributes
